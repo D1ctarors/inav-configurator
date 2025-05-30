@@ -1702,34 +1702,34 @@
     },
 
     "adjustmentsHelp": {
-        "message": "Configure adjustment switches.  See the 'in-flight adjustments' section of the manual for details.  The changes that adjustment functions make are not saved automatically.  There are 4 slots.  Each switch used to concurrently make adjustments requires exclusive use of a slot."
+        "message": "Настройте переключатели для корректировок. Подробности см. в разделе «Корректировки в полёте» руководства. Изменения от функций корректировки не сохраняются автоматически. Доступно 4 слота. Каждый переключатель, используемый для одновременных корректировок, требует выделенного слота."
     },
     "adjustmentsExamples": {
-        "message": "Examples"
+        "message": "Примеры"
     },
     "adjustmentsExample1": {
-        "message": "Use Slot 1 and a 3POS switch on CH5 to select between Pitch/Roll P, I and D and another 3POS switch on CH6 to increase or decrease the value when held up or down."
+        "message": "Используйте слот 1 и трёхпозиционный переключатель на канале 5, чтобы выбирать между P, I и D по тангажу/крeну, а другой трёхпозиционный переключатель на канале 6 — для увеличения или уменьшения значения при удержании вверх или вниз."
     },
     "adjustmentsExample2": {
-        "message": "Use Slot 2 and a 3POS switch on CH8 to select enable Rate Profile Selection via the same 3POS switch on the same channel."
+        "message": "Используйте слот 2 и трёхпозиционный переключатель на канале 8 для выбора профиля скорости через тот же переключатель на том же канале."
     },
     "adjustmentsColumnEnable": {
-        "message": "If enabled"
+        "message": "Если включено"
     },
     "adjustmentsColumnUsingSlot": {
-        "message": "using slot"
+        "message": "используется слот"
     },
     "adjustmentsColumnWhenChannel": {
-        "message": "when channel"
+        "message": "когда канал"
     },
     "adjustmentsColumnIsInRange": {
-        "message": "is in range"
+        "message": "в пределах диапазона"
     },
     "adjustmentsColumnThenApplyFunction": {
-        "message": "then apply"
+        "message": "применить функцию"
     },
     "adjustmentsColumnViaChannel": {
-        "message": "via channel"
+        "message": "через канал"
     },
     "adjustmentsSlot0": {
         "message": "Slot 1"
@@ -5028,10 +5028,10 @@
         "message": "Illegal state. Restart required."
     },
     "motor_direction_inverted": {
-        "message": "Normal motor direction / Props-in configuration"
+        "message": "Normal motor direction / Props- in configuration"
     },
     "motor_direction_isInverted": {
-        "message": "Reversed motor direction / Props-out configuration"
+        "message": "Reversed motor direction / Props- out configuration"
     },
     "motor_direction_inverted_hint": {
         "message": "Enable if the motor direction is reversed and the props are mounted in the opposite direction."
@@ -5656,7 +5656,7 @@
         "message": "Filter Hz"
     },
     "ezTuneAxisRatio": {
-        "message": "Axis ratio"
+        "message": "Баланс по осям"
     },
     "ezTuneResponse": {
         "message": "Response"
