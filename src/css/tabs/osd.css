@@ -356,8 +356,9 @@ button {
 }
 
 .fontbuttons {
-    display: inline-block;
-    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    /* position: absolute; */
     right: 1.2em;
     top: .8em;
 }
@@ -395,6 +396,11 @@ button {
     margin-bottom: 8px;
     width: 100%;
 
+
+}
+.load_font_file{
+    background-color: #37a8db;
+    color: white;
 }
 
 .spacer_box_title span {
