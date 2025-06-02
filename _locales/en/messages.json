@@ -1700,36 +1700,35 @@
     "auxiliaryEepromSaved": {
         "message": "EEPROM <span style=\"color: #37a8db\">saved</span>"
     },
-
     "adjustmentsHelp": {
-        "message": "Настройте переключатели для корректировок. Подробности см. в разделе «Корректировки в полёте» руководства. Изменения от функций корректировки не сохраняются автоматически. Доступно 4 слота. Каждый переключатель, используемый для одновременных корректировок, требует выделенного слота."
+        "message": "Configure adjustment switches.  See the 'in-flight adjustments' section of the manual for details.  The changes that adjustment functions make are not saved automatically.  There are 4 slots.  Each switch used to concurrently make adjustments requires exclusive use of a slot."
     },
     "adjustmentsExamples": {
-        "message": "Примеры"
+        "message": "Examples"
     },
     "adjustmentsExample1": {
-        "message": "Используйте слот 1 и трёхпозиционный переключатель на канале 5, чтобы выбирать между P, I и D по тангажу/крeну, а другой трёхпозиционный переключатель на канале 6 — для увеличения или уменьшения значения при удержании вверх или вниз."
+        "message": "Use Slot 1 and a 3POS switch on CH5 to select between Pitch/Roll P, I and D and another 3POS switch on CH6 to increase or decrease the value when held up or down."
     },
     "adjustmentsExample2": {
-        "message": "Используйте слот 2 и трёхпозиционный переключатель на канале 8 для выбора профиля скорости через тот же переключатель на том же канале."
+        "message": "Use Slot 2 and a 3POS switch on CH8 to select enable Rate Profile Selection via the same 3POS switch on the same channel."
     },
     "adjustmentsColumnEnable": {
-        "message": "Если включено"
+        "message": "If enabled"
     },
     "adjustmentsColumnUsingSlot": {
-        "message": "используется слот"
+        "message": "using slot"
     },
     "adjustmentsColumnWhenChannel": {
-        "message": "когда канал"
+        "message": "when channel"
     },
     "adjustmentsColumnIsInRange": {
-        "message": "в пределах диапазона"
+        "message": "is in range"
     },
     "adjustmentsColumnThenApplyFunction": {
-        "message": "применить функцию"
+        "message": "then apply"
     },
     "adjustmentsColumnViaChannel": {
-        "message": "через канал"
+        "message": "via channel"
     },
     "adjustmentsSlot0": {
         "message": "Slot 1"
@@ -5656,7 +5655,7 @@
         "message": "Filter Hz"
     },
     "ezTuneAxisRatio": {
-        "message": "Баланс по осям"
+        "message": "Axis ratio"
     },
     "ezTuneResponse": {
         "message": "Response"
