@@ -1,8 +1,8 @@
 /*global $, chrome, analytics*/
-'use strict';
+"use strict";
 
 // Google Analytics
-var googleAnalyticsService = analytics.getService('ice_cream_app');
+var googleAnalyticsService = analytics.getService("ice_cream_app");
 var googleAnalytics = googleAnalyticsService.getTracker("UA-75834706-2");
 var googleAnalyticsConfig = false;
 googleAnalyticsService.getConfig().addCallback(function (config) {
@@ -17,7 +17,7 @@ const UnitType = {
     OSD: "OSD",
     imperial: "imperial",
     metric: "metric",
-}
+};
 
 let globalSettings = {
     // Configurator rendering options
@@ -33,59 +33,58 @@ let globalSettings = {
     // Show colours for profiles
     showProfileParameters: null,
     // tree target for documents
-    docsTreeLocation: 'master',
+    docsTreeLocation: "master",
 };
 
 $(document).ready(function () {
     // translate to user-selected language
     localize();
 
-    chrome.storage.local.get('unit_type', function (result) {
+    chrome.storage.local.get("unit_type", function (result) {
         if (!result.unit_type) {
             result.unit_type = UnitType.none;
         }
         globalSettings.unitType = result.unit_type;
     });
-    chrome.storage.local.get('map_provider_type', function (result) {
-        if (typeof result.map_provider_type === 'undefined') {
-            result.map_provider_type = 'osm';
+    chrome.storage.local.get("map_provider_type", function (result) {
+        if (typeof result.map_provider_type === "undefined") {
+            result.map_provider_type = "osm";
         }
         globalSettings.mapProviderType = result.map_provider_type;
     });
-    chrome.storage.local.get('map_api_key', function (result) {
-        if (typeof result.map_api_key === 'undefined') {
-            result.map_api_key = '';
+    chrome.storage.local.get("map_api_key", function (result) {
+        if (typeof result.map_api_key === "undefined") {
+            result.map_api_key = "";
         }
         globalSettings.mapApiKey = result.map_api_key;
     });
-    chrome.storage.local.get('proxyurl', function (result) {
-        if (typeof result.proxyurl === 'undefined') {
-            result.proxyurl = 'http://192.168.1.222/mapproxy/service?';
+    chrome.storage.local.get("proxyurl", function (result) {
+        if (typeof result.proxyurl === "undefined") {
+            result.proxyurl = "http://192.168.1.222/mapproxy/service?";
         }
         globalSettings.proxyURL = result.proxyurl;
     });
-    chrome.storage.local.get('proxylayer', function (result) {
-        if (typeof result.proxylayer === 'undefined') {
-            result.proxylayer = 'your_proxy_layer_name';
+    chrome.storage.local.get("proxylayer", function (result) {
+        if (typeof result.proxylayer === "undefined") {
+            result.proxylayer = "your_proxy_layer_name";
         }
         globalSettings.proxyLayer = result.proxylayer;
     });
-    chrome.storage.local.get('show_profile_parameters', function (result) {
-        if (typeof result.show_profile_parameters === 'undefined') {
+    chrome.storage.local.get("show_profile_parameters", function (result) {
+        if (typeof result.show_profile_parameters === "undefined") {
             result.show_profile_parameters = 1;
         }
         globalSettings.showProfileParameters = result.show_profile_parameters;
         // Update CSS on to show highlighing or not
         updateProfilesHighlightColours();
     });
-    chrome.storage.local.get('cli_autocomplete', function (result) {
-        if (typeof result.cli_autocomplete === 'undefined') {
+    chrome.storage.local.get("cli_autocomplete", function (result) {
+        if (typeof result.cli_autocomplete === "undefined") {
             result.cli_autocomplete = 1;
         }
         globalSettings.cliAutocomplete = result.cli_autocomplete;
         CliAutoComplete.setEnabled(globalSettings.cliAutocomplete);
     });
-
 
     // Resets the OSD units used by the unit coversion when the FC is disconnected.
     if (!CONFIGURATOR.connectionValid) {
@@ -93,114 +92,161 @@ $(document).ready(function () {
     }
 
     // alternative - window.navigator.appVersion.match(/Chrome\/([0-9.]*)/)[1];
-    GUI.log(chrome.i18n.getMessage('getRunningOS') + GUI.operating_system + '</strong>, ' +
-        'Chrome: <strong>' + window.navigator.appVersion.replace(/.*Chrome\/([0-9.]*).*/, "$1") + '</strong>, ' +
-        chrome.i18n.getMessage('getConfiguratorVersion') + chrome.runtime.getManifest().version + '</strong>');
+    GUI.log(
+        chrome.i18n.getMessage("getRunningOS") +
+            GUI.operating_system +
+            "</strong>, " +
+            "Chrome: <strong>" +
+            window.navigator.appVersion.replace(/.*Chrome\/([0-9.]*).*/, "$1") +
+            "</strong>, " +
+            chrome.i18n.getMessage("getConfiguratorVersion") +
+            chrome.runtime.getManifest().version +
+            "</strong>"
+    );
 
-    $('#status-bar .version').text(chrome.runtime.getManifest().version);
-    $('#logo .version').text(chrome.runtime.getManifest().version);
+    $("#status-bar .version").text(chrome.runtime.getManifest().version);
+    $("#logo .version").text(chrome.runtime.getManifest().version);
     updateFirmwareVersion();
 
     // notification messages for various operating systems
     switch (GUI.operating_system) {
-        case 'Windows':
+        case "Windows":
             break;
-        case 'MacOS':
+        case "MacOS":
             // var main_chromium_version = window.navigator.appVersion.replace(/.*Chrome\/([0-9.]*).*/,"$1").split('.')[0];
             break;
-        case 'ChromeOS':
+        case "ChromeOS":
             break;
-        case 'Linux':
+        case "Linux":
             break;
-        case 'UNIX':
+        case "UNIX":
             break;
     }
 
     if (typeof require !== "undefined") {
         // Load native UI library
-        var gui = require('nw.gui');
+        var gui = require("nw.gui");
         var win = gui.Window.get();
 
         //Listen to the new window event
-        win.on('new-win-policy', function (frame, url, policy) {
+        win.on("new-win-policy", function (frame, url, policy) {
             gui.Shell.openExternal(url);
             policy.ignore();
         });
 
         //Get saved size and position
-        chrome.storage.local.get('windowSize', function (result) {
+        chrome.storage.local.get("windowSize", function (result) {
             if (result.windowSize) {
-                if (result.windowSize.height >= window.screen.availHeight && result.windowSize.width >= window.screen.availWidth) {
+                if (
+                    result.windowSize.height >= window.screen.availHeight &&
+                    result.windowSize.width >= window.screen.availWidth
+                ) {
                     win.maximize();
                 } else {
                     win.height = result.windowSize.height;
                     win.width = result.windowSize.width;
-                    win.x = Math.max(result.windowSize.x, window.screen.availLeft);
-                    win.y = Math.max(result.windowSize.y, window.screen.availTop);
+                    win.x = Math.max(
+                        result.windowSize.x,
+                        window.screen.availLeft
+                    );
+                    win.y = Math.max(
+                        result.windowSize.y,
+                        window.screen.availTop
+                    );
                 }
             }
         });
 
         win.setMinimumSize(800, 600);
 
-        win.on('close', function () {
+        win.on("close", function () {
             //Save window size and position
-            chrome.storage.local.set({'windowSize': {height: win.height, width: win.width, x: win.x, y: win.y}}, function () {
-                // Notify that we saved.
-                console.log('Settings saved');
-            });
+            chrome.storage.local.set(
+                {
+                    windowSize: {
+                        height: win.height,
+                        width: win.width,
+                        x: win.x,
+                        y: win.y,
+                    },
+                },
+                function () {
+                    // Notify that we saved.
+                    console.log("Settings saved");
+                }
+            );
             this.hide(); // Pretend to be closed already
             console.log("We're closing...");
             this.close(true);
         });
     } else {
-        console.log('Not load require');
+        console.log("Not load require");
     }
 
-    chrome.storage.local.get('logopen', function (result) {
+    chrome.storage.local.get("logopen", function (result) {
         if (result.logopen) {
-            $("#showlog").trigger('click');
-         }
+            $("#showlog").trigger("click");
+        }
     });
 
-    chrome.storage.local.get('update_notify', function(result) {
-        if (typeof result.update_notify === 'undefined' || result.update_notify) {
+    chrome.storage.local.get("update_notify", function (result) {
+        if (
+            typeof result.update_notify === "undefined" ||
+            result.update_notify
+        ) {
             appUpdater.checkRelease(chrome.runtime.getManifest().version);
         }
     });
 
     // log library versions in console to make version tracking easier
-    console.log('Libraries: jQuery - ' + $.fn.jquery + ', d3 - ' + d3.version + ', three.js - ' + THREE.REVISION);
+    console.log(
+        "Libraries: jQuery - " +
+            $.fn.jquery +
+            ", d3 - " +
+            d3.version +
+            ", three.js - " +
+            THREE.REVISION
+    );
 
     // Tabs
-    var ui_tabs = $('#tabs > ul');
-    $('a', ui_tabs).click(function () {
-
+    var ui_tabs = $("#tabs > ul");
+    $("a", ui_tabs).click(function () {
         if ($(this).parent().hasClass("tab_help")) {
             return;
         }
 
-        if ($(this).parent().hasClass('active') == false && !GUI.tab_switch_in_progress) { // only initialize when the tab isn't already active
+        if (
+            $(this).parent().hasClass("active") == false &&
+            !GUI.tab_switch_in_progress
+        ) {
+            // only initialize when the tab isn't already active
             var self = this,
-                tabClass = $(self).parent().prop('class');
+                tabClass = $(self).parent().prop("class");
 
-            var tabRequiresConnection = $(self).parent().hasClass('mode-connected');
+            var tabRequiresConnection = $(self)
+                .parent()
+                .hasClass("mode-connected");
 
             var tab = tabClass.substring(4);
             var tabName = $(self).text();
 
             if (tabRequiresConnection && !CONFIGURATOR.connectionValid) {
-                GUI.log(chrome.i18n.getMessage('tabSwitchConnectionRequired'));
+                GUI.log(chrome.i18n.getMessage("tabSwitchConnectionRequired"));
                 return;
             }
 
-            if (GUI.connect_lock) { // tab switching disabled while operation is in progress
-                GUI.log(chrome.i18n.getMessage('tabSwitchWaitForOperation'));
+            if (GUI.connect_lock) {
+                // tab switching disabled while operation is in progress
+                GUI.log(chrome.i18n.getMessage("tabSwitchWaitForOperation"));
                 return;
             }
 
             if (GUI.allowedTabs.indexOf(tab) < 0) {
-                GUI.log(chrome.i18n.getMessage('tabSwitchUpgradeRequired', [tabName]));
+                GUI.log(
+                    chrome.i18n.getMessage("tabSwitchUpgradeRequired", [
+                        tabName,
+                    ])
+                );
                 return;
             }
 
@@ -208,18 +254,18 @@ $(document).ready(function () {
 
             GUI.tab_switch_cleanup(function () {
                 // disable previously active tab highlight
-                $('li', ui_tabs).removeClass('active');
+                $("li", ui_tabs).removeClass("active");
 
                 // Highlight selected tab
-                $(self).parent().addClass('active');
+                $(self).parent().addClass("active");
 
                 // detach listeners and remove element data
-                var content = $('#content');
-                content.data('empty', !!content.is(':empty'));
+                var content = $("#content");
+                content.data("empty", !!content.is(":empty"));
                 content.empty();
 
                 // display loading screen
-                $('#cache .data-loading').clone().appendTo(content);
+                $("#cache .data-loading").clone().appendTo(content);
 
                 function content_ready() {
                     GUI.tab_switch_in_progress = false;
@@ -229,179 +275,197 @@ $(document).ready(function () {
                 }
 
                 switch (tab) {
-                    case 'landing':
+                    case "landing":
                         TABS.landing.initialize(content_ready);
                         break;
-                    case 'firmware_flasher':
+                    case "firmware_flasher":
                         TABS.firmware_flasher.initialize(content_ready);
                         break;
-                    case 'sitl':
+                    case "sitl":
                         TABS.sitl.initialize(content_ready);
                         break;
-                    case 'auxiliary':
+                    case "auxiliary":
                         TABS.auxiliary.initialize(content_ready);
                         break;
-                    case 'adjustments':
+                    case "adjustments":
                         TABS.adjustments.initialize(content_ready);
                         break;
-                    case 'ports':
+                    case "ports":
                         TABS.ports.initialize(content_ready);
                         break;
-                    case 'led_strip':
+                    case "led_strip":
                         TABS.led_strip.initialize(content_ready);
                         break;
-                    case 'failsafe':
+                    case "failsafe":
                         TABS.failsafe.initialize(content_ready);
                         break;
-                    case 'setup':
+                    case "setup":
                         TABS.setup.initialize(content_ready);
                         break;
-                    case 'calibration':
+                    case "calibration":
                         TABS.calibration.initialize(content_ready);
                         break;
-                    case 'configuration':
+                    case "configuration":
                         TABS.configuration.initialize(content_ready);
                         break;
-                    case 'profiles':
+                    case "profiles":
                         TABS.profiles.initialize(content_ready);
                         break;
-                    case 'pid_tuning':
+                    case "pid_tuning":
                         TABS.pid_tuning.initialize(content_ready);
                         break;
-                    case 'receiver':
+                    case "receiver":
                         TABS.receiver.initialize(content_ready);
                         break;
-                    case 'modes':
+                    case "modes":
                         TABS.modes.initialize(content_ready);
                         break;
-                    case 'servos':
+                    case "servos":
                         TABS.servos.initialize(content_ready);
                         break;
-                    case 'gps':
+                    case "gps":
                         TABS.gps.initialize(content_ready);
                         break;
-                    case 'magnetometer':
+                    case "magnetometer":
                         TABS.magnetometer.initialize(content_ready);
                         break;
-                    case 'mission_control':
+                    case "mission_control":
                         TABS.mission_control.initialize(content_ready);
                         break;
-                    case 'mixer':
+                    case "mixer":
                         TABS.mixer.initialize(content_ready);
                         break;
-                    case 'outputs':
+                    case "outputs":
                         TABS.outputs.initialize(content_ready);
                         break;
-                    case 'osd':
+                    case "osd":
                         TABS.osd.initialize(content_ready);
                         break;
-                    case 'sensors':
+                    case "sensors":
                         TABS.sensors.initialize(content_ready);
                         break;
-                    case 'logging':
+                    case "logging":
                         TABS.logging.initialize(content_ready);
                         break;
-                    case 'onboard_logging':
+                    case "onboard_logging":
                         TABS.onboard_logging.initialize(content_ready);
                         break;
-                    case 'advanced_tuning':
+                    case "advanced_tuning":
                         TABS.advanced_tuning.initialize(content_ready);
                         break;
-                    case 'programming':
+                    case "programming":
                         TABS.programming.initialize(content_ready);
                         break;
-                    case 'cli':
+                    case "cli":
                         TABS.cli.initialize(content_ready);
                         break;
-                    case 'ez_tune':
+                    case "ez_tune":
                         TABS.ez_tune.initialize(content_ready);
                         break;
 
                     default:
-                        console.log('Tab not found:' + tab);
+                        console.log("Tab not found:" + tab);
                 }
             });
         }
     });
 
-    $('#tabs ul.mode-disconnected li a:first').click();
+    $("#tabs ul.mode-disconnected li a:first").click();
 
     // options
-    $('#options').click(function () {
+    $("#options").click(function () {
         var el = $(this);
 
-        if (!el.hasClass('active')) {
-            el.addClass('active');
+        if (!el.hasClass("active")) {
+            el.addClass("active");
             el.after('<div id="options-window"></div>');
 
-            $('div#options-window').load('./tabs/options.html', function () {
-                googleAnalytics.sendAppView('Options');
+            $("div#options-window").load("./tabs/options.html", function () {
+                googleAnalytics.sendAppView("Options");
 
                 // translate to user-selected language
                 localize();
 
                 // if notifications are enabled, or wasn't set, check the notifications checkbox
-                chrome.storage.local.get('update_notify', function (result) {
-                    if (typeof result.update_notify === 'undefined' || result.update_notify) {
-                        $('div.notifications input').prop('checked', true);
+                chrome.storage.local.get("update_notify", function (result) {
+                    if (
+                        typeof result.update_notify === "undefined" ||
+                        result.update_notify
+                    ) {
+                        $("div.notifications input").prop("checked", true);
                     }
                 });
 
-                $('div.notifications input').change(function () {
-                    var check = $(this).is(':checked');
-                    googleAnalytics.sendEvent('Settings', 'Notifications', check);
+                $("div.notifications input").change(function () {
+                    var check = $(this).is(":checked");
+                    googleAnalytics.sendEvent(
+                        "Settings",
+                        "Notifications",
+                        check
+                    );
 
-                    chrome.storage.local.set({'update_notify': check});
+                    chrome.storage.local.set({ update_notify: check });
                 });
 
                 // if tracking is enabled, check the statistics checkbox
                 if (googleAnalyticsConfig.isTrackingPermitted()) {
-                    $('div.statistics input').prop('checked', true);
+                    $("div.statistics input").prop("checked", true);
                 }
 
-                $('div.statistics input').change(function () {
-                    var check = $(this).is(':checked');
-                    googleAnalytics.sendEvent('Settings', 'GoogleAnalytics', check);
+                $("div.statistics input").change(function () {
+                    var check = $(this).is(":checked");
+                    googleAnalytics.sendEvent(
+                        "Settings",
+                        "GoogleAnalytics",
+                        check
+                    );
                     googleAnalyticsConfig.setTrackingPermitted(check);
                 });
 
-                $('div.show_profile_parameters input').change(function () {
-                    globalSettings.showProfileParameters = $(this).is(':checked');
+                $("div.show_profile_parameters input").change(function () {
+                    globalSettings.showProfileParameters =
+                        $(this).is(":checked");
                     chrome.storage.local.set({
-                        'show_profile_parameters': globalSettings.showProfileParameters
+                        show_profile_parameters:
+                            globalSettings.showProfileParameters,
                     });
 
                     // Update CSS on select boxes
                     updateProfilesHighlightColours();
 
                     // Horrible way to reload the tab
-                    const activeTab = $('#tabs li.active');
-                    activeTab.removeClass('active');
-                    activeTab.find('a').click();
+                    const activeTab = $("#tabs li.active");
+                    activeTab.removeClass("active");
+                    activeTab.find("a").click();
                 });
-                $('div.cli_autocomplete input').change(function () {
-                    globalSettings.cliAutocomplete = $(this).is(':checked');
+                $("div.cli_autocomplete input").change(function () {
+                    globalSettings.cliAutocomplete = $(this).is(":checked");
                     chrome.storage.local.set({
-                        'cli_autocomplete': globalSettings.cliAutocomplete
+                        cli_autocomplete: globalSettings.cliAutocomplete,
                     });
 
-                    CliAutoComplete.setEnabled($(this).is(':checked'));
+                    CliAutoComplete.setEnabled($(this).is(":checked"));
                 });
 
-
-                $('#ui-unit-type').val(globalSettings.unitType);
-                $('#map-provider-type').val(globalSettings.mapProviderType);
-                $('#map-api-key').val(globalSettings.mapApiKey);
-                $('#proxyurl').val(globalSettings.proxyURL);
-                $('#proxylayer').val(globalSettings.proxyLayer);
-                $('#showProfileParameters').prop('checked', globalSettings.showProfileParameters);
-                $('#cliAutocomplete').prop('checked', globalSettings.cliAutocomplete);
+                $("#ui-unit-type").val(globalSettings.unitType);
+                $("#map-provider-type").val(globalSettings.mapProviderType);
+                $("#map-api-key").val(globalSettings.mapApiKey);
+                $("#proxyurl").val(globalSettings.proxyURL);
+                $("#proxylayer").val(globalSettings.proxyLayer);
+                $("#showProfileParameters").prop(
+                    "checked",
+                    globalSettings.showProfileParameters
+                );
+                $("#cliAutocomplete").prop(
+                    "checked",
+                    globalSettings.cliAutocomplete
+                );
 
                 // Set the value of the unit type
                 // none, OSD, imperial, metric
-                $('#ui-unit-type').change(function () {
+                $("#ui-unit-type").change(function () {
                     chrome.storage.local.set({
-                        'unit_type': $(this).val()
+                        unit_type: $(this).val(),
                     });
                     globalSettings.unitType = $(this).val();
 
@@ -412,49 +476,56 @@ $(document).ready(function () {
                     }
 
                     // Horrible way to reload the tab
-                    const activeTab = $('#tabs li.active');
-                    activeTab.removeClass('active');
-                    activeTab.find('a').click();
+                    const activeTab = $("#tabs li.active");
+                    activeTab.removeClass("active");
+                    activeTab.find("a").click();
                 });
-                $('#map-provider-type').change(function () {
+                $("#map-provider-type").change(function () {
                     chrome.storage.local.set({
-                        'map_provider_type': $(this).val()
+                        map_provider_type: $(this).val(),
                     });
                     globalSettings.mapProviderType = $(this).val();
                 });
-                $('#map-api-key').change(function () {
+                $("#map-api-key").change(function () {
                     chrome.storage.local.set({
-                        'map_api_key': $(this).val()
+                        map_api_key: $(this).val(),
                     });
                     globalSettings.mapApiKey = $(this).val();
                 });
-                $('#proxyurl').change(function () {
+                $("#proxyurl").change(function () {
                     chrome.storage.local.set({
-                        'proxyurl': $(this).val()
+                        proxyurl: $(this).val(),
                     });
                     globalSettings.proxyURL = $(this).val();
                 });
-				$('#proxylayer').change(function () {
+                $("#proxylayer").change(function () {
                     chrome.storage.local.set({
-                        'proxylayer': $(this).val()
+                        proxylayer: $(this).val(),
                     });
                     globalSettings.proxyLayer = $(this).val();
                 });
-                $('#demoModeReset').on('click', () => {
-                    SITLProcess.deleteEepromFile('demo.bin');
+                $("#demoModeReset").on("click", () => {
+                    SITLProcess.deleteEepromFile("demo.bin");
                 });
                 function close_and_cleanup(e) {
-                    if (e.type == 'click' && !$.contains($('div#options-window')[0], e.target) || e.type == 'keyup' && e.keyCode == 27) {
-                        $(document).unbind('click keyup', close_and_cleanup);
+                    if (
+                        (e.type == "click" &&
+                            !$.contains(
+                                $("div#options-window")[0],
+                                e.target
+                            )) ||
+                        (e.type == "keyup" && e.keyCode == 27)
+                    ) {
+                        $(document).unbind("click keyup", close_and_cleanup);
 
-                        $('div#options-window').slideUp(250, function () {
-                            el.removeClass('active');
+                        $("div#options-window").slideUp(250, function () {
+                            el.removeClass("active");
                             $(this).empty().remove();
                         });
                     }
                 }
 
-                $(document).bind('click keyup', close_and_cleanup);
+                $(document).bind("click keyup", close_and_cleanup);
 
                 $(this).slideDown(250);
             });
@@ -464,23 +535,50 @@ $(document).ready(function () {
     var $content = $("#content");
 
     // listen to all input change events and adjust the value within limits if necessary
-    $content.on('focus', 'input[type="number"]', function () {
+    $content.on("focus", 'input[type="number"]', function () {
         var element = $(this),
             val = element.val();
 
         if (!isNaN(val)) {
-            element.data('previousValue', parseFloat(val));
+            element.data("previousValue", parseFloat(val));
         }
     });
 
-    $content.on('keydown', 'input[type="number"]', function (e) {
+    $content.on("keydown", 'input[type="number"]', function (e) {
         // whitelist all that we need for numeric control
         var whitelist = [
-            96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, // numpad and standard number keypad
-            109, 189, // minus on numpad and in standard keyboard
-            8, 46, 9, // backspace, delete, tab
-            190, 110, // decimal point
-            37, 38, 39, 40, 13 // arrows and enter
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57, // numpad and standard number keypad
+            109,
+            189, // minus on numpad and in standard keyboard
+            8,
+            46,
+            9, // backspace, delete, tab
+            190,
+            110, // decimal point
+            37,
+            38,
+            39,
+            40,
+            13, // arrows and enter
         ];
 
         if (whitelist.indexOf(e.keyCode) == -1) {
@@ -488,16 +586,16 @@ $(document).ready(function () {
         }
     });
 
-    $content.on('change', 'input[type="number"]', function () {
+    $content.on("change", 'input[type="number"]', function () {
         var element = $(this),
-            min = parseFloat(element.prop('min')),
-            max = parseFloat(element.prop('max')),
-            step = parseFloat(element.prop('step')),
+            min = parseFloat(element.prop("min")),
+            max = parseFloat(element.prop("max")),
+            step = parseFloat(element.prop("step")),
             val = parseFloat(element.val()),
             decimal_places;
 
         // only adjust minimal end if bound is set
-        if (element.prop('min')) {
+        if (element.prop("min")) {
             if (val < min) {
                 element.val(min);
                 val = min;
@@ -505,7 +603,7 @@ $(document).ready(function () {
         }
 
         // only adjust maximal end if bound is set
-        if (element.prop('max')) {
+        if (element.prop("max")) {
             if (val > max) {
                 element.val(max);
                 val = max;
@@ -514,96 +612,132 @@ $(document).ready(function () {
 
         // if entered value is illegal use previous value instead
         if (isNaN(val)) {
-            element.val(element.data('previousValue'));
-            val = element.data('previousValue');
+            element.val(element.data("previousValue"));
+            val = element.data("previousValue");
         }
 
         // if step is not set or step is int and value is float use previous value instead
         if (isNaN(step) || step % 1 === 0) {
             if (val % 1 !== 0) {
-                element.val(element.data('previousValue'));
-                val = element.data('previousValue');
+                element.val(element.data("previousValue"));
+                val = element.data("previousValue");
             }
         }
 
         // if step is set and is float and value is int, convert to float, keep decimal places in float according to step *experimental*
         if (!isNaN(step) && step % 1 !== 0) {
-            decimal_places = String(step).split('.')[1].length;
+            decimal_places = String(step).split(".")[1].length;
 
             if (val % 1 === 0) {
                 element.val(val.toFixed(decimal_places));
-            } else if (String(val).split('.')[1].length != decimal_places) {
+            } else if (String(val).split(".")[1].length != decimal_places) {
                 element.val(val.toFixed(decimal_places));
             }
         }
     });
 
-    $("#showlog").on('click', function() {
-    var state = $(this).data('state'),
-        $log = $("#log");
+    $("#showlog").on("click", function () {
+        var state = $(this).data("state"),
+            $log = $("#log");
 
-    if (state) {
-        $log.animate({height: 27}, 200, function() {
-             var command_log = $('div#log');
-             //noinspection JSValidateTypes
-            command_log.scrollTop($('div.wrapper', command_log).height());
-        });
-        $log.removeClass('active');
-        $("#content").removeClass('logopen');
-        $(".tab_container").removeClass('logopen');
-        $("#scrollicon").removeClass('active');
-        chrome.storage.local.set({'logopen': false});
+        if (state) {
+            $log.animate({ height: 27 }, 200, function () {
+                var command_log = $("div#log");
+                //noinspection JSValidateTypes
+                command_log.scrollTop($("div.wrapper", command_log).height());
+            });
+            $log.removeClass("active");
+            $("#content").removeClass("logopen");
+            $(".tab_container").removeClass("logopen");
+            $("#scrollicon").removeClass("active");
+            chrome.storage.local.set({ logopen: false });
 
-        state = false;
-    }else{
-        $log.animate({height: 111}, 200);
-        $log.addClass('active');
-        $("#content").addClass('logopen');
-        $(".tab_container").addClass('logopen');
-        $("#scrollicon").addClass('active');
-        chrome.storage.local.set({'logopen': true});
+            state = false;
+        } else {
+            $log.animate({ height: 111 }, 200);
+            $log.addClass("active");
+            $("#content").addClass("logopen");
+            $(".tab_container").addClass("logopen");
+            $("#scrollicon").addClass("active");
+            chrome.storage.local.set({ logopen: true });
 
-        state = true;
-    }
-        $(this).html(state ? chrome.i18n.getMessage("mainHideLog") : chrome.i18n.getMessage("mainShowLog"));
-    $(this).data('state', state);
-
+            state = true;
+        }
+        $(this).html(
+            state
+                ? chrome.i18n.getMessage("mainHideLog")
+                : chrome.i18n.getMessage("mainShowLog")
+        );
+        $(this).data("state", state);
     });
 
-    var mixerprofile_e = $('#mixerprofilechange');
+    var mixerprofile_e = $("#mixerprofilechange");
 
     mixerprofile_e.change(function () {
         var mixerprofile = parseInt($(this).val());
-        MSP.send_message(MSPCodes.MSP2_INAV_SELECT_MIXER_PROFILE, [mixerprofile], false, function () {
-            GUI.log(chrome.i18n.getMessage('setMixerProfile', [mixerprofile + 1]));
-            MSP.send_message(MSPCodes.MSP_SET_REBOOT, false, false, function () {
-                GUI.log(chrome.i18n.getMessage('deviceRebooting'));
-                GUI.handleReconnect();
-            });
-        });
+        MSP.send_message(
+            MSPCodes.MSP2_INAV_SELECT_MIXER_PROFILE,
+            [mixerprofile],
+            false,
+            function () {
+                GUI.log(
+                    chrome.i18n.getMessage("setMixerProfile", [
+                        mixerprofile + 1,
+                    ])
+                );
+                MSP.send_message(
+                    MSPCodes.MSP_SET_REBOOT,
+                    false,
+                    false,
+                    function () {
+                        GUI.log(chrome.i18n.getMessage("deviceRebooting"));
+                        GUI.handleReconnect();
+                    }
+                );
+            }
+        );
     });
 
-    var profile_e = $('#profilechange');
+    var profile_e = $("#profilechange");
 
     profile_e.change(function () {
         var profile = parseInt($(this).val());
-        MSP.send_message(MSPCodes.MSP_SELECT_SETTING, [profile], false, function () {
-            GUI.log(chrome.i18n.getMessage('setControlProfile', [profile + 1]));
-        });
+        MSP.send_message(
+            MSPCodes.MSP_SELECT_SETTING,
+            [profile],
+            false,
+            function () {
+                GUI.log(
+                    chrome.i18n.getMessage("setControlProfile", [profile + 1])
+                );
+            }
+        );
     });
 
-    var batteryprofile_e = $('#batteryprofilechange');
+    var batteryprofile_e = $("#batteryprofilechange");
 
     batteryprofile_e.change(function () {
         var batteryprofile = parseInt($(this).val());
-        MSP.send_message(MSPCodes.MSP2_INAV_SELECT_BATTERY_PROFILE, [batteryprofile], false, function () {
-            GUI.log(chrome.i18n.getMessage('setBatteryProfile', [batteryprofile + 1]));
-        });
+        MSP.send_message(
+            MSPCodes.MSP2_INAV_SELECT_BATTERY_PROFILE,
+            [batteryprofile],
+            false,
+            function () {
+                GUI.log(
+                    chrome.i18n.getMessage("setBatteryProfile", [
+                        batteryprofile + 1,
+                    ])
+                );
+            }
+        );
     });
 });
 
 function get_osd_settings() {
-    if (globalSettings.osdUnits !== undefined && globalSettings.osdUnits !==  null) {
+    if (
+        globalSettings.osdUnits !== undefined &&
+        globalSettings.osdUnits !== null
+    ) {
         return;
     }
 
@@ -622,30 +756,32 @@ function get_osd_settings() {
 
 function updateProfilesHighlightColours() {
     if (globalSettings.showProfileParameters) {
-        $('.dropdown-dark #profilechange').addClass('showProfileParams');
-        $('.dropdown-dark #batteryprofilechange').addClass('showProfileParams');
+        $(".dropdown-dark #profilechange").addClass("showProfileParams");
+        $(".dropdown-dark #batteryprofilechange").addClass("showProfileParams");
 
-        $('.batteryProfileHighlight').each(function() {
-            $(this).addClass('batteryProfileHighlightActive');
-            $(this).removeClass('batteryProfileHighlight');
+        $(".batteryProfileHighlight").each(function () {
+            $(this).addClass("batteryProfileHighlightActive");
+            $(this).removeClass("batteryProfileHighlight");
         });
 
-        $('.controlProfileHighlight').each(function() {
-            $(this).addClass('controlProfileHighlightActive');
-            $(this).removeClass('controlProfileHighlight');
+        $(".controlProfileHighlight").each(function () {
+            $(this).addClass("controlProfileHighlightActive");
+            $(this).removeClass("controlProfileHighlight");
         });
     } else {
-        $('.dropdown-dark #profilechange').removeClass('showProfileParams');
-        $('.dropdown-dark #batteryprofilechange').removeClass('showProfileParams');
+        $(".dropdown-dark #profilechange").removeClass("showProfileParams");
+        $(".dropdown-dark #batteryprofilechange").removeClass(
+            "showProfileParams"
+        );
 
-        $('.batteryProfileHighlightActive').each(function() {
-            $(this).addClass('batteryProfileHighlight');
-            $(this).removeClass('batteryProfileHighlightActive');
+        $(".batteryProfileHighlightActive").each(function () {
+            $(this).addClass("batteryProfileHighlight");
+            $(this).removeClass("batteryProfileHighlightActive");
         });
 
-        $('.controlProfileHighlightActive').each(function() {
-            $(this).addClass('controlProfileHighlight');
-            $(this).removeClass('controlProfileHighlightActive');
+        $(".controlProfileHighlightActive").each(function () {
+            $(this).addClass("controlProfileHighlight");
+            $(this).removeClass("controlProfileHighlightActive");
         });
     }
 }
@@ -654,7 +790,7 @@ function catch_startup_time(startTime) {
     var endTime = new Date().getTime(),
         timeSpent = endTime - startTime;
 
-    googleAnalytics.sendTiming('Load Times', 'Application Startup', timeSpent);
+    googleAnalytics.sendTiming("Load Times", "Application Startup", timeSpent);
 }
 
 function millitime() {
@@ -663,19 +799,19 @@ function millitime() {
 
 function bytesToSize(bytes) {
     if (bytes < 1024) {
-        bytes = bytes + ' Bytes';
+        bytes = bytes + " Bytes";
     } else if (bytes < 1048576) {
-        bytes = (bytes / 1024).toFixed(3) + ' KB';
+        bytes = (bytes / 1024).toFixed(3) + " KB";
     } else if (bytes < 1073741824) {
-        bytes = (bytes / 1048576).toFixed(3) + ' MB';
+        bytes = (bytes / 1048576).toFixed(3) + " MB";
     } else {
-        bytes = (bytes / 1073741824).toFixed(3) + ' GB';
+        bytes = (bytes / 1073741824).toFixed(3) + " GB";
     }
 
     return bytes;
 }
 
-Number.prototype.clamp = function(min, max) {
+Number.prototype.clamp = function (min, max) {
     return Math.min(Math.max(this, min), max);
 };
 
@@ -691,7 +827,7 @@ Number.prototype.clamp = function(min, max) {
 String.prototype.format = function () {
     var args = arguments;
     return this.replace(/\{(\d+)\}/g, function (t, i) {
-        return args[i] !== void 0 ? args[i] : "{"+(i-args.length)+"}";
+        return args[i] !== void 0 ? args[i] : "{" + (i - args.length) + "}";
     });
 };
 
@@ -699,7 +835,7 @@ function padZeros(val, length) {
     let str = val.toString();
 
     if (str.length < length) {
-        if (str.charAt(0) === '-') {
+        if (str.charAt(0) === "-") {
             str = "-0" + str.substring(1);
             str = padZeros(str, length);
         } else {
@@ -711,30 +847,39 @@ function padZeros(val, length) {
 }
 
 function updateActivatedTab() {
-    var activeTab = $('#tabs > ul li.active');
-    activeTab.removeClass('active');
-    $('a', activeTab).trigger('click');
+    var activeTab = $("#tabs > ul li.active");
+    activeTab.removeClass("active");
+    $("a", activeTab).trigger("click");
 }
 
 function updateFirmwareVersion() {
     if (CONFIGURATOR.connectionValid) {
-        $('#logo .firmware_version').text(CONFIG.flightControllerVersion + " [" + CONFIG.target + "]");
-        globalSettings.docsTreeLocation = 'https://github.com/iNavFlight/inav/blob/' + CONFIG.flightControllerVersion + '/docs/';
+        $("#logo .firmware_version").text(
+            CONFIG.flightControllerVersion + " [" + CONFIG.target + "]"
+        );
+        globalSettings.docsTreeLocation =
+            "https://github.com/iNavFlight/inav/blob/" +
+            CONFIG.flightControllerVersion +
+            "/docs/";
 
         // If this is a master branch firmware, this will find a 404 as there is no tag tree. So default to master for docs.
         $.ajax({
-            url : globalSettings.docsTreeLocation + 'Settings.md',
+            url: globalSettings.docsTreeLocation + "Settings.md",
             method: "HEAD",
             statusCode: {
-                404: function() {
-                    globalSettings.docsTreeLocation = 'https://github.com/iNavFlight/inav/blob/master/docs/';
-                }
-            }
+                404: function () {
+                    globalSettings.docsTreeLocation =
+                        "https://github.com/iNavFlight/inav/blob/master/docs/";
+                },
+            },
         });
     } else {
-        $('#logo .firmware_version').text(chrome.i18n.getMessage('fcNotConnected'));
+        $("#logo .firmware_version").text(
+            chrome.i18n.getMessage("fcNotConnected")
+        );
 
-        globalSettings.docsTreeLocation = 'https://github.com/iNavFlight/inav/blob/master/docs/';
+        globalSettings.docsTreeLocation =
+            "https://github.com/iNavFlight/inav/blob/master/docs/";
     }
 }
 
@@ -742,19 +887,25 @@ function updateEzTuneTabVisibility(loadMixerConfig) {
     let useEzTune = true;
     if (CONFIGURATOR.connectionValid) {
         if (loadMixerConfig) {
-            mspHelper.loadMixerConfig(function() {
-                if (MIXER_CONFIG.platformType == PLATFORM_MULTIROTOR || MIXER_CONFIG.platformType == PLATFORM_TRICOPTER) {
-                    $('.tab_ez_tune').removeClass("is-hidden");
+            mspHelper.loadMixerConfig(function () {
+                if (
+                    MIXER_CONFIG.platformType == PLATFORM_MULTIROTOR ||
+                    MIXER_CONFIG.platformType == PLATFORM_TRICOPTER
+                ) {
+                    $(".tab_ez_tune").removeClass("is-hidden");
                 } else {
-                    $('.tab_ez_tune').addClass("is-hidden");
+                    $(".tab_ez_tune").addClass("is-hidden");
                     useEzTune = false;
                 }
             });
         } else {
-            if (MIXER_CONFIG.platformType == PLATFORM_MULTIROTOR || MIXER_CONFIG.platformType == PLATFORM_TRICOPTER) {
-                $('.tab_ez_tune').removeClass("is-hidden");
+            if (
+                MIXER_CONFIG.platformType == PLATFORM_MULTIROTOR ||
+                MIXER_CONFIG.platformType == PLATFORM_TRICOPTER
+            ) {
+                $(".tab_ez_tune").removeClass("is-hidden");
             } else {
-                $('.tab_ez_tune').addClass("is-hidden");
+                $(".tab_ez_tune").addClass("is-hidden");
                 useEzTune = false;
             }
         }

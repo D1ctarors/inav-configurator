@@ -1,183 +1,114 @@
-# INAV Configurator
+# INAV Configurator Mod
 
-INAV Configurator is a cross-platform configuration tool for the [INAV](https://github.com/iNavFlight/inav) flight control system.
+INAV Configurator Mod — это модифицированный кроссплатформенный инструмент конфигурации, созданный на основе [INAV Configurator 7.1.2](https://github.com/iNavFlight/inav/tree/7.1.2) для системы управления полётом [INAV](https://github.com/iNavFlight/inav).
 
-It runs as an app within Google Chrome and allows you to configure the INAV software running on any supported INAV target.
+Он работает как приложение внутри Google Chrome и позволяет настраивать прошивку INAV на любом поддерживаемом контроллере.
 
-Various types of aircraft are supported by the tool and by INAV, e.g. quadcopters, hexacopters, octocopters, and fixed-wing aircraft.
+Программа поддерживает различные типы летательных аппаратов, такие как квадрокоптеры, гексакоптеры, октокоптеры и самолёты.
 
-# Support
+## ✨ Основные изменения мода
 
-INAV Configurator comes `as is`, without any warranty and support from the authors. If you find a bug, please create an issue on [GitHub](https://github.com/iNavFlight/inav-configurator/issues).
+### 🌐 Локализация
 
-The GitHub issue tracker is reserved for bugs and other technical problems. If you do not know how to set up
-everything, the hardware is not working, or you have any other _support_ problem, please consult:
+-   Добавлен перевод интерфейса на русский язык по умолчанию
 
-* [INAV Discord Server](https://discord.gg/peg2hhbYwN)
-* [INAV Official on Facebook](https://www.facebook.com/groups/INAVOfficial)
-* [RC Groups Support](https://www.rcgroups.com/forums/showthread.php?2495732-Cleanflight-iNav-(navigation-rewrite)-project)
-* [INAV Official on Telegram](https://t.me/INAVFlight)
+### 🎨 Интерфейс
 
-## INAV Configurator starts minimized, what should I do?
+-   Расширен сайдбар
+-   Обновлены иконки и изображения
+-   Изменена вёрстка и стили
 
-You have to remove the `C:\Users%Your_UserName%\AppData\Local\inav-configurator` folder and all its content.
+## Windows
 
-[https://www.youtube.com/watch?v=XMoULyiFDp4](https://www.youtube.com/watch?v=XMoULyiFDp4)
+1. Перейдите на [страницу релизов](https://github.com/D1ctarors/inav-configurator/releases)
+2. Скачайте конфигуратор для Windows (доступны win32 и win64)
+3. Распакуйте ZIP-архив
+4. Запустите приложение INAV Configurator из распакованной папки
+5. Конфигуратор не подписан, поэтому Windows может запросить разрешение на запуск неподписанных приложений при первом запуске
 
-Alternatively, on Windows with PowerShell, you can use the `post_install_cleanup.ps1` script that will do the cleaning. (thank you, James Cherrill)
+Или:
 
-## Installation
+1. Перейдите на [страницу релизов](https://github.com/D1ctarors/inav-configurator/releases)
+2. Скачайте установщик `INAV-Configurator_win64_7.1.2.exe`
 
-Depending on the target operating system, _INAV Configurator_ is distributed as a  _standalone_ application or Chrome App.
+## Сборка и запуск INAV Configurator локально (для разработки)
 
-### Windows
+Для локальной разработки используется система сборки **node.js**.
 
-1. Visit [release page](https://github.com/iNavFlight/inav-configurator/releases)
-1. Download Configurator for Windows platform (win32 or win64 is present)
-1. Extract ZIP archive
-1. Run the INAV Configurator app from the unpacked folder
-1. Configurator is not signed, so you have to allow Windows to run untrusted applications. There might be a monit for it during the first run
+1. Установите [node.js](https://nodejs.org/en)
+2. В корне проекта выполните команду:
 
-### Linux
-
-1. Visit [release page](https://github.com/iNavFlight/inav-configurator/releases)
-2. Download Configurator for Linux platform (linux32 and linux64 are present)
-   *  **.rpm** is the Fedora installation file. Just download and install using `sudo dnf localinstall /path/to/INAV-Configurator_linux64-x.y.z-x86_64.rpm` or open it with a package manager (e.g. via Files)
-   *  **.deb** is the Debian/Ubuntu installation file. Just download and install using `sudo apt install /path/to/INAV-Configurator_linux64_x.y.z.deb` or open it with a package manager (e.g. via the File Manager)
-   *  **.tar.gz** is a universal archive. Download and continue with these instructions to install
-3. Change to the directory containing the downloaded **tar.gz** file
-4. download [this](https://raw.githubusercontent.com/iNavFlight/inav-configurator/master/assets/linux/inav-configurator.desktop) file to the same directory. Its filename should be `inav-configurator.desktop`.
-5. Extract **tar.gz** archive
+```bash
+npm install
 ```
-tar -C /tmp/ -xf INAV-Configurator_linuxNN_x.y.z.tar.gz
+
+3. Чтобы собрать JS и CSS и запустить конфигуратор:
+
+-   Через NW.js:
+
+```bash
+npm start
 ```
-   **NN** is the bits of your OS. **x.y.z** is the INAV Configurator version number.
 
-6. If this is the first time installing INAV Configurator, create a home for its files
+-   Через Chrome:
+
+```bash
+npm run gulp
 ```
-sudo mkdir /opt/inav
-sudo chown $USER /opt/inav
+
+Затем откройте `chrome://extensions`, включите `Режим разработчика`, нажмите `Загрузить распакованное расширение...` и выберите папку `inav-configurator`.
+
+Дополнительные задачи определены в `gulpfile.js`. Чтобы запустить задачу, используйте:
+
+```bash
+node ./node_modules/gulp/bin/gulp.js <имя-задачи>
 ```
-7. Move the temporary files into their home 
+
+Доступные задачи:
+
+-   **build**: Генерация JS и CSS из исходников. Обязателен при изменении `.js` или `.css` файлов. Новые файлы необходимо подключить в `gulpfile.js`.
+
+-   **watch**: Автоматически запускает `build` при изменениях исходников.
+
+-   **dist**: Создание дистрибутива приложения в `./dist/`.
+
+-   **release**: Сборка NW.js-приложений для платформ win32, osx64 и linux64 в `./apps/`. Для macOS/Linux требуется Wine для установки иконки Windows-приложения.
+
+Сборка для конкретной платформы:
+
+```bash
+node ./node_modules/gulp/bin/gulp.js release --platform="win64"
 ```
-mv /tmp/INAV\ Configurator /opt/inav/inav-configurator
+
+Сборка установщика:
+
+```bash
+node ./node_modules/gulp/bin/gulp.js release --platform="win64" --installer
 ```
-8. Update the application icon.
+
+## Запуск с отладчиком | Inspector
+
+Чтобы открыть Inspector, необходимо использовать SDK-версию NW.js.
+
+```bash
+npm install nw@0.61.0 --nwjs_build_type=sdk
 ```
-sudo mkdir /opt/inav/inav-configurator/icon
-sudo cp /opt/inav/inav-configurator/images/inav_icon_128.png /opt/inav/inav-configurator/icon
-```
-9. As a one-off, move the desktop file into the applications directory 
-```
-sudo mv inav-configurator.desktop /usr/share/applications/
-```
-10. Make the following files executable:
-   * inav-configurator `chmod +x /opt/inav/inav-configurator/inav-configurator`
-   * (5.0.0+) chrome_crashpad_handler `chmod +x /opt/inav/inav-configurator/chrome_crashpad_handler`
-11. Run the INAV Configurator app from the unpacked folder `/opt/inav/inav-configurator/inav-configurator`
 
-#### Notes
+## Кастомизация шрифтов
 
-On some Linux distros, you may be missing `libatomic` and/or `NW.JS` (especially `libnode.so`) dependencies. If so, please install `libatomic` using your distro's package manager, e.g:
+INAV предоставляет изображения шрифтов, чтобы вы могли создать собственные стили — аналоговые и цифровые. Ресурсы находятся в [osd](/resources/osd). Внутри папок **analogue** и **digital** находятся инструкции по созданию. Также доступна [Карта символов INAV](/resources/osd/INAV%20Character%20Map.md) с визуализацией и переменными.
 
-* Arch Linux: `sudo pacman -S --needed libatomic_ops`
-* Debian / Ubuntu: `sudo apt install libatomic1`
-* Fedora: `sudo dnf install libatomic`
+Инструменты сборки:
 
-1. Don't forget to add your user to the dialout group "sudo usermod -aG dialout YOUR_USERNAME" for serial access
-2. If you have 3D model animation problems, enable "Override software rendering list" in Chrome flags chrome://flags/#ignore-gpu-blacklist
+-   [аналоговых](https://github.com/fiam/max7456tool)
+-   [цифровых](https://github.com/MrD-RC/hdosd-font-tool)
 
-### Mac
+Новые шрифты можно отправлять через pull request.
 
-1. Visit [release page](https://github.com/iNavFlight/inav-configurator/releases)
-1. Download Configurator for the Mac platform
-1. Extract ZIP archive
-1. Run INAV Configurator
-
-## Building and running INAV Configurator locally (for development)
-
-For local development, the **node.js** build system is used.
-
-1. Install node.js
-1. From the project folder run `npm install`
-1. To build the JS and CSS files and start the configurator:
-    - With NW.js: Run `npm start`.
-    - With Chrome: Run `npm run gulp`. Then open `chrome://extensions`, enable
-    the `Developer mode`, click on the `Load unpacked extension...` button, and select the `inav-configurator` directory.
-
-Other tasks are also defined in `gulpfile.js`. To run a task, use `node ./node_modules/gulp/bin/gulp.js task-name`. Available ones are:
-
-- **build**: Generate JS and CSS output files used by the configurator from their sources. It must be run whenever changes are made to any `.js` or `.css` files in order to have those changes appear
-in the configurator. If new files are added, they must be included in `gulpfile.js`. See the comments at the top of `gulpfile.js` to learn how to do so. See also the `watch` task.
-- **watch**: Watch JS and CSS sources for changes and run the `build` task whenever they're edited.
-- **dist**: Create a distribution of the app (valid for packaging both as a Chrome app or NW.js app)
-in the `./dist/` directory.
-- **release**: Create NW.js apps for each supported platform (win32, osx64 and linux64) in the `./apps`
-directory. Running this task on macOS or Linux requires Wine since it's needed to set the icon
-for the Windows app. If you don't have Wine installed, you can create a release by running the **release-only-Linux** task.
-<br>`--installer` argument can be added to build installers for a particular OS. NOTE: MacOS Installer can be built with MacOS only.
-
-To build a specific release, use the command `release --platform="win64"` for example.
-
-### Running with debug | Inspector
-
-To be able to open Inspector, you will need SDK flavours of NW.js
-
-`npm install nw@0.61.0 --nwjs_build_type=sdk`
-
-## Different map providers
-
-INAV Configurator 2.1 allows you to choose between OpenStreetMap, Bing Maps (Aerial View), and MapProxy map providers.
-INAV Configurator is shipped **WITHOUT** API key for Bing Maps. That means: every user who wants to use Bing Maps has to create their own account, agree to all _Terms and Conditions_ required by Bing Maps, and configure INAV Configurator by himself.
-
-### How to choose a Map provider
-
-1. Click **Settings** icon in the top-right corner of INAV Configurator
-1. Choose a provider: OpenStreetMap, Bing, or MapProxy
-1. In the case of Bing Maps, you have to provide your own, personal, generated by you, Bing Maps API key
-1. For MapProxy, you need to provide a server URL and layer name to be used
-
-### How to get the Bing Maps API key
-
-1. Go to the Bing Maps Dev Center at [https://www.bingmapsportal.com/](https://www.bingmapsportal.com/).
-    * If you have a Bing Maps account, sign in with the Microsoft account that you used to create the account or create a new one. For new accounts, follow the instructions in [Creating a Bing Maps Account](https://msdn.microsoft.com/library/gg650598.aspx).
-1. Select **My keys** under **My Account**.
-1. Select the option to create a new key.
-1. Provide the following information to create a key:
-    1. Application name: Required. The name of the application.
-    1. Application URL: The URL of the application. This is an optional field that is useful in helping you remember the purpose of that key in the future.
-    1. Key type: Required. Select the key type that you want to create. You can find descriptions of key and application types here.
-    1. Application type: Required. Select the application type that best represents the application that will use this key. You can find descriptions of key and application types [here](https://www.microsoft.com/maps/create-a-bing-maps-key.aspx).
-1. Click the **Create** button. The new key is displayed in the list of available keys. Use this key to authenticate your Bing Maps application as described in the documentation for the Bing Maps API you are using.
-
-### How to set up a MapProxy server for offline caching and mission planning
-1. Follow the process described in [MAPPROXY.md](MAPPROXY.md)
-1. Test your MapProxy server in a web browser, eg: http://192.168.145.20/inavmapproxy/
-1. Once you have a working MapProxy server choose MapProxy as your map provider
-	1. Enter MapProxy service URL, eg: http://192.168.145.20/inavmapproxy/service?
-	1. Enter MapProxy service layer (inav_layer if configured from MAPPROXY.md)
-1. Once completed, you can zoom in on the area you will be flying in while connected to the internet in either the GPS or Mission Control tab to save the cache for offline use
-
-## Font Customisation
-
-INAV provides the font images so that custom fonts can be created for your personal preference. This is the case for both analogue and digital fonts. The resources can be found in the [osd](/resources/osd) folder. Within the **analogue** and **digital** subfolders, you will find information on compiling your own fonts. There is also an [INAV Character Map](/resources/osd/INAV%20Character%20Map.md) document. This contains previews of all the character images in the fonts and the appropriate variable names within the firmware and Configurator. There are tools for compiling the [analogue](https://github.com/fiam/max7456tool) and [digital](https://github.com/MrD-RC/hdosd-font-tool) fonts. New font submissions via pull requests are welcome.
-
-## Notes
+## Примечания
 
 ### WebGL
 
-Make sure Settings -> System -> "User hardware acceleration when available" is checked to achieve the best performance
+Убедитесь, что в настройках Chrome включена опция:
 
-## Issue trackers
-
-For INAV configurator issues raise them here
-
-https://github.com/iNavFlight/inav-configurator/issues
-
-For INAV firmware issues, raise them here
-
-https://github.com/iNavFlight/inav/issues
-
-## Developers
-
-We accept clean and reasonable patches, submit them!
+**Настройки → Система → Использовать аппаратное ускорение (если доступно)**

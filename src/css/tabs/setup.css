@@ -20,7 +20,7 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    width: 120px;
+    width: 165px;
     margin: 0;
     font-weight: normal;
     color: #616161;
@@ -42,14 +42,14 @@
 
 .attitude_note1 {
    position: absolute;
-   left: 130px;
+   left: 145px;
    top: 29px;
    font-size: 10px;
 }
 
 .attitude_note2 {
    position: absolute;
-   left: 130px;
+   left: 145px;
    top: 13px;
    font-size: 10px;
 }

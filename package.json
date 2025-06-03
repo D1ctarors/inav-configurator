@@ -6,6 +6,7 @@
   "default_locale": "en",
   "scripts": {
     "start": "node node_modules/gulp/bin/gulp.js build && node node_modules/nw/bin/nw .",
+    "release": "node ./node_modules/gulp/bin/gulp.js release",
     "gulp": "gulp",
     "nw": "nw"
   },
@@ -18,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "github.com/iNavFlight/inav-configurator"
+    "url": "github.com/D1ctarors/inav-configurator"
   },
   "author": "iNavFlight",
   "license": "GPL-3.0",

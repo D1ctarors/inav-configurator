@@ -141,7 +141,7 @@ input[type="number"]::-webkit-inner-spin-button {
     background: url("../images/light-wide-2.svg") no-repeat left center;
     background-size: contain;
     margin-left: 15px;
-    margin-top: 20px;
+    margin-top: 20px; 
 }
 
 .logo_text {
@@ -151,11 +151,12 @@ input[type="number"]::-webkit-inner-spin-button {
     top: 48px;
     color: #949494;
     opacity: 0.5;
+    display: flex;
 }
 
 .logo_text .version {
     float: right;
-    margin-left: 1em;
+    margin-left: 1.5em;
 }
 
 .logo_text_firmware {
@@ -165,11 +166,12 @@ input[type="number"]::-webkit-inner-spin-button {
     top: 60px;
     color: #949494;
     opacity: 0.5;
+    display: flex;
 }
 
 .logo_text_firmware .firmware_version {
     float: right;
-    margin-left: 2.1em;
+    margin-left: 1.5em;
 }
 
 .logo_text_mod_version {
@@ -179,15 +181,13 @@ input[type="number"]::-webkit-inner-spin-button {
     top: 72px;
     color: #949494;
     opacity: 0.5;
+    display: flex;
 }
 
-.logo_text_mod_version .mainLogoTextMod {
-    
-}
 
 .logo_text_mod_version .firmware_mod_version {
     float: right;
-    margin-left: 2.1em;
+    margin-left: 1.5em;
 }
 
 #port-picker {
@@ -499,8 +499,8 @@ input[type="number"]::-webkit-inner-spin-button {
     float: right;
     width: 20px;
     height: 20px;
-    margin-top: 10px;
-    margin-right: 10px;
+    margin-top: 15px;
+    margin-right: 15px;
     background: url('../images/CF_settings_white.svg') no-repeat -1px -1px;
     opacity: 0.4;
 }
@@ -1634,7 +1634,7 @@ dialog {
     /* margin-left: 5px; */
     margin-bottom: 7px;
     transition: none;
-    transform: rotate(90deg);
+    /* transform: rotate(90deg); */
 }
 
 .connect_b a.connect {
@@ -1650,7 +1650,8 @@ dialog {
 
 .connect_b a.connect.active {
     border: 1px solid #fe0000;
-    background: #e60000 url('../images/icons/cf_icon_usb1_white.svg');
+    background-size: 44px;
+    background: #e60000 url('../images/icons/cf_icon_usb1_white.svg') no-repeat center 6px;
     transition: none;
 }
 
@@ -1957,7 +1958,7 @@ dialog {
     }
 
     #tabs li a {
-        font-family: 'open_sansregular', Arial, serif;
+        /* font-family: 'open_sansregular', Arial, serif; */
         font-size: 12px;
         padding-left: 60px;
         padding-top: 6px;
