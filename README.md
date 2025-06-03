@@ -1,5 +1,7 @@
 # INAV Configurator Mod
 
+![Prev](https://github.com/user-attachments/assets/6a9382d6-90af-4790-adbd-50ef09164edc)
+
 INAV Configurator Mod — это модифицированный кроссплатформенный инструмент конфигурации, созданный на основе [INAV Configurator 7.1.2](https://github.com/iNavFlight/inav/tree/7.1.2) для системы управления полётом [INAV](https://github.com/iNavFlight/inav).
 
 Он работает как приложение внутри Google Chrome и позволяет настраивать прошивку INAV на любом поддерживаемом контроллере.
