@@ -31,7 +31,7 @@ INAV Configurator Mod — это модифицированный кросспл
 Или:
 
 1. Перейдите на [страницу релизов](https://github.com/D1ctarors/inav-configurator/releases)
-2. Скачайте установщик `INAV-Configurator_win64_7.1.2.exe`
+2. Скачайте установщик `INAV-Configurator_win64_X.X.X.exe`
 
 ## Сборка и запуск INAV Configurator локально (для разработки)
 
