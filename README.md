@@ -1,6 +1,6 @@
 # INAV Configurator Mod
 
-![Prev](https://github.com/user-attachments/assets/6a9382d6-90af-4790-adbd-50ef09164edc)
+![Prev](https://github.com/user-attachments/assets/1d308bf2-8e15-4976-9a2a-907771421514)
 
 INAV Configurator Mod — это модифицированный кроссплатформенный инструмент конфигурации, созданный на основе [INAV Configurator 7.1.2](https://github.com/iNavFlight/inav/tree/7.1.2) для системы управления полётом [INAV](https://github.com/iNavFlight/inav).
 
