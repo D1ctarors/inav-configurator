@@ -8,8 +8,7 @@
             </div>
             <div class="spacer">
                 <div class="checkbox">
-                    <input type="checkbox" data-bit="28" class="feature toggle" name="PWM_OUTPUT_ENABLE"
-                        title="PWM_OUTPUT_ENABLE" id="feature-28">
+                    <input type="checkbox" data-bit="28" class="feature toggle" name="PWM_OUTPUT_ENABLE" title="PWM_OUTPUT_ENABLE" id="feature-28">
                     <label for="feature-28">
                         <span data-i18n="featurePWM_OUTPUT_ENABLE"></span>
                     </label>
@@ -18,8 +17,7 @@
                 <!--list of generated features goes here-->
                 <div id="esc-protocols">
                     <div class="select">
-                        <select name="esc-protocol" id="esc-protocol"
-                            data-setting-placeholder="motor_pwm_protocol"></select>
+                        <select name="esc-protocol" id="esc-protocol" data-setting-placeholder="motor_pwm_protocol"></select>
                         <label for="esc-protocol">
                             <span data-i18n="escProtocol"></span>
                         </label>
@@ -71,8 +69,7 @@
                 </div>
                 <div data-i18n="reversibleEscWarning" class="info-box for-reversible-motors"></div>
                 <div class="checkbox">
-                    <input type="checkbox" data-bit="12" class="feature toggle" name="REVERSIBLE_MOTORS"
-                        title="REVERSIBLE_MOTORS" id="feature-12">
+                    <input type="checkbox" data-bit="12" class="feature toggle" name="REVERSIBLE_MOTORS" title="REVERSIBLE_MOTORS" id="feature-12">
                     <label for="feature-12">
                         <span data-i18n="featureREVERSIBLE_MOTORS"></span>
                     </label>
@@ -120,7 +117,11 @@
                 <div class="motors right">
                     <div class="half">
                         <div class="mixerPreview">
-                            <img src="./resources/motor_order/custom.svg" />
+                            <img src="./resources/motor_order/custom.svg" id="motor-mixer-preview-img" />
+                                <div class="motorNumber" id="motorNumber1">1</div>
+                                <div class="motorNumber" id="motorNumber2">2</div>
+                                <div class="motorNumber" id="motorNumber3">3</div>
+                                <div class="motorNumber" id="motorNumber4">4</div>
                         </div>
                     </div>
                     <div class="half">
@@ -142,8 +143,8 @@
                     <div class="clear-both"></div>
                     <div class="motor_testing_notice">
                         <p i18n="motorsNotice"></p>
-                        <label><input id="motorsEnableTestMode" type="checkbox" class="togglesmall" /><span
-                                class="motorsEnableTestMode" i18n="motorsEnableControl"></span></label>
+                        <label><input id="motorsEnableTestMode" type="checkbox" class="togglesmall"/><span
+                            class="motorsEnableTestMode" i18n="motorsEnableControl"></span></label>
                     </div>
                 </div>
                 <div class="clear-both"></div>

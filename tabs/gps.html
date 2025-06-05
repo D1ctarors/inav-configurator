@@ -9,17 +9,18 @@
                         <div class="spacer_box_title" data-i18n="configurationGPS"></div>
                     </div>
                     <div class="spacer_box">
-                        <div class="note">
-                            <div class="note_spacer">
-                                <p data-i18n="configurationGPSHelp"></p>
-                            </div>
-                        </div>
-
                         <div class="checkbox">
-                            <input type="checkbox" data-bit="7" class="feature toggle" name="GPS" title="GPS"
-                                id="feature-7">
+                            <input type="checkbox" data-bit="7" class="feature toggle" name="GPS" title="GPS" id="feature-7">
                             <label for="feature-7"><span data-i18n="featureGPS"></span></label>
                             <div for="feature-7" class="helpicon cf_tip" data-i18n_title="featureGPSTip"></div>
+                        </div>
+                        <div class="select">
+                            <select id="gps_port" class="gps_port"></select>
+                            <label for="gps_port"><span data-i18n="gpsPort"></span></label>
+                        </div>
+                        <div class="select">
+                            <select id="gps_baud" class="gps_baud"></select>
+                            <label for="gps_baud"><span data-i18n="gpsBaud"></span></label>
                         </div>
                         <div class="select">
                             <select id="gps_protocol" class="gps_protocol">
@@ -34,36 +35,30 @@
                             <label for="gps_ubx_sbas"><span data-i18n="configurationGPSubxSbas"></span></label>
                         </div>
                         <div class="number is-hidden">
-                            <input type="number" id="mag_declination" name="mag_declination" step="0.1" min="-180"
-                                max="180" />
+                            <input type="number" id="mag_declination" name="mag_declination" step="0.1" min="-180" max="180" />
                             <label for="mag_declination"><span data-i18n="configurationMagDeclination"></span></label>
                         </div>
                         <div class="checkbox">
-                            <input type="checkbox" class="toggle update_preview" data-setting="gps_ublox_use_galileo"
-                                data-live="true">
+                            <input type="checkbox" class="toggle update_preview" data-setting="gps_ublox_use_galileo" data-live="true">
                             <label for="gps_use_galileo"><span data-i18n="configurationGPSUseGalileo"></span></label>
                         </div>
                         <div class="checkbox">
-                            <input type="checkbox" class="toggle update_preview" data-setting="gps_ublox_use_beidou"
-                                data-live="true">
+                            <input type="checkbox" class="toggle update_preview" data-setting="gps_ublox_use_beidou" data-live="true">
                             <label for="gps_use_beidou"><span data-i18n="configurationGPSUseBeidou"></span></label>
                         </div>
                         <div class="checkbox">
-                            <input type="checkbox" class="toggle update_preview" data-setting="gps_ublox_use_glonass"
-                                data-live="true">
+                            <input type="checkbox" class="toggle update_preview" data-setting="gps_ublox_use_glonass" data-live="true">
                             <label for="gps_use_glonass"><span data-i18n="configurationGPSUseGlonass"></span></label>
                         </div>
                         <div class="number">
-                            <input type="number" id="tzOffset" data-setting="tz_offset" data-unit="tzmins"
-                                data-setting-multiplier="1" step="1" min="-1440" max="1440" />
+                            <input type="number" id="tzOffset" data-setting="tz_offset" data-unit="tzmins" data-setting-multiplier="1" step="1" min="-1440" max="1440" />
                             <label for="tzOffset"><span data-i18n="tzOffset"></span></label>
                             <div for="tzOffset" class="helpicon cf_tip" data-i18n_title="tzOffsetHelp"></div>
                         </div>
                         <div class="select">
                             <select id="tzAutomaticDST" data-setting="tz_automatic_dst"></select>
                             <label for="tzAutomaticDST"><span data-i18n="tzAutomaticDST"></span></label>
-                            <div for="tzAutomaticDST" class="helpicon cf_tip" data-i18n_title="tzAutomaticDSTHelp">
-                            </div>
+                            <div for="tzAutomaticDST" class="helpicon cf_tip" data-i18n_title="tzAutomaticDSTHelp"></div>
                         </div>
                     </div>
                 </div>
@@ -81,7 +76,7 @@
                             </tr>
                             <tr>
                                 <td data-i18n="gpsAltitude"></td>
-                                <td class="alt">0 м</td>
+                                <td class="alt">0 m</td>
                             </tr>
                             <tr>
                                 <td data-i18n="gpsLat"></td>
@@ -93,14 +88,14 @@
                             </tr>
                             <tr>
                                 <td data-i18n="gpsSpeed"></td>
-                                <td class="speed">0 см/с</td>
+                                <td class="speed">0 cm/s</td>
                             </tr>
                             <tr>
                                 <td data-i18n="gpsSats"></td>
                                 <td class="sats">0</td>
                             </tr>
                             <tr class="noboarder">
-                                <td style="width: auto" data-i18n="gpsDistToHome"></td>
+                                <td data-i18n="gpsDistToHome"></td>
                                 <td class="distToHome"></td>
                             </tr>
                         </table>
@@ -125,11 +120,11 @@
                                 <td class="epv">0</td>
                             </tr>
                             <tr>
-                                <td style="width: auto" data-i18n="gpsMessageRate"></td>
+                                <td data-i18n="gpsMessageRate"></td>
                                 <td class="rate">0</td>
                             </tr>
                             <tr>
-                                <td style="width: auto" data-i18n="gpsTotalMessages"></td>
+                                <td style="width: 85px" data-i18n="gpsTotalMessages"></td>
                                 <td class="messages">0</td>
                             </tr>
                             <tr>
@@ -139,6 +134,23 @@
                             <tr class="noboarder">
                                 <td data-i18n="gpsTimeouts"></td>
                                 <td class="timeouts">0</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="gui_box grey adsb_info_block">
+                    <div class="gui_box_titlebar">
+                        <div class="spacer_box_title">ADSB</div>
+                    </div>
+                    <div class="spacer_box GPS_stat">
+                        <table class="cf_table">
+                            <tr>
+                                <td style="width: 85px" data-i18n="adsbVehicleTotalMessages"></td>
+                                <td class="adsbVehicleTotalMessages">0</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 85px" data-i18n="adsbHeartbeatTotalMessages"></td>
+                                <td class="adsbHeartbeatTotalMessages">0</td>
                             </tr>
                         </table>
                     </div>
@@ -163,6 +175,12 @@
     <div class="content_toolbar">
         <div class="btn save_btn">
             <a class="save" href="#" data-i18n="configurationButtonSave"></a>
+        </div>
+        <div class="btn save_btn">
+            <a class="loadAssistnowOnline" href="#" data-i18n="gpsLoadAssistnowOnlineButton"></a>
+        </div>
+        <div class="btn save_btn">
+            <a class="loadAssistnowOffline" href="#" data-i18n="gpsLoadAssistnowOfflineButton"></a>
         </div>
     </div>
 </div>

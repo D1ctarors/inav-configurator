@@ -14,7 +14,7 @@
 
 .tab-landing .content_top {
     height: 140px;
-    background: white url(/images/map_bg.svg);
+    background: white url(./../../../images/map_bg.svg);
     padding: 20px;
 }
 
@@ -77,6 +77,7 @@
 .tab-landing .logowrapper img {
     width: 700px;
     margin: 10px;
+    height: 85px;
 }
 
 
